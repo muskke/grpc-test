@@ -3,7 +3,7 @@ package server
 import (
 	"context"
 	"github.com/micro-community/micro/v3/service/logger"
-	pb "github.com/muskke/grpc-test/proto/v2"
+	pb "github.com/muskke/grpc-test/proto/v3"
 	"net/http"
 )
 
@@ -16,7 +16,7 @@ func (h *Handler) Test(ctx context.Context, req *pb.Request, rsp *pb.Response) e
 	rsp.Data = make(map[string]string)
 	rsp.Data["name"] = req.GetName()
 	//rsp.Data["others"] = string(req.GetOthers())
-	rsp.Height = req.GetHeight()
+	rsp.Height = 1.1
 	rsp.Weight = req.GetWeight()
 	logger.Infof("Handler.Test - rsp: [%+v]", rsp)
 	return nil

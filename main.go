@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/micro-community/micro/v3/service"
-	pb "github.com/muskke/grpc-test/proto/v2"
+	pb "github.com/muskke/grpc-test/proto/v3"
 	"github.com/muskke/grpc-test/server"
 )
 

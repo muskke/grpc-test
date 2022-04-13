@@ -1,0 +1,90 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "grpc_test.proto",
+    "version": "version not set"
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {},
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "type_url": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "runtimeError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v2Response": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "$ref": "#/definitions/v2TestVersion",
+          "title": "当前版本"
+        },
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "title": "状态码"
+        },
+        "height": {
+          "type": "number",
+          "format": "double",
+          "title": "身高(V3版本交换序号)"
+        },
+        "weight": {
+          "type": "number",
+          "format": "float",
+          "title": "体重(V3版本交换序号)"
+        },
+        "data": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "数据集(V2版本交换字段位置)"
+        }
+      }
+    },
+    "v2TestVersion": {
+      "type": "string",
+      "enum": [
+        "UnKNOW",
+        "VERSION_1",
+        "VERSION_2"
+      ],
+      "default": "UnKNOW",
+      "title": "- UnKNOW: 未知版本\n - VERSION_1: 版本1\n - VERSION_2: 版本2(V2版本新增)"
+    }
+  }
+}

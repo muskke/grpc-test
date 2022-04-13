@@ -8,7 +8,7 @@ GOPATH:=$(shell go env GOPATH)
 GOROOT:=$(shell go env GOROOT)
 empty :=
 space := $(empty) $(empty)
-version:=v2
+version:=v3
 
 #go imports
 VALIDATE_IMPORT := Mvalidate/validate.proto=github.com/envoyproxy/protoc-gen-validate/validate

@@ -4,12 +4,16 @@ import (
 	"context"
 	grpcCli "github.com/micro-community/micro/v3/service/client/grpc"
 	"github.com/micro-community/micro/v3/service/logger"
-	pb "github.com/muskke/grpc-test/proto/v1"
+	pb "github.com/muskke/grpc-test/proto/v3"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 	"sync"
 	"time"
 
 	"github.com/micro-community/micro/v3/service/client"
 )
+
+const addr = "localhost:10000"
 
 var instance pb.GrpcTestService
 var once sync.Once
@@ -23,25 +27,45 @@ func GetInstance() pb.GrpcTestService {
 	return instance
 }
 
-func DoTestV1(ctx context.Context) {
-	req := &pb.Request{
-		Name:   "Test",
-		Age:    100,
-		Others: []byte("height: 180cm,weight: 65.0kg"),
+func GrpcClient() pb.GrpcTestClient {
+	conn, err := grpc.Dial(addr, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	if err != nil {
+		logger.Fatalf("did not connect: %v", err)
 	}
-	logger.Infof("DoTestV1 req: [%+v]", req)
+	//defer conn.Close()
+
+	return pb.NewGrpcTestClient(conn)
+}
+
+func DoTestV3(ctx context.Context, req *pb.Request) {
+	logger.Infof("DoTestV3 req: [%+v]", req)
 
 	rsp, err := GetInstance().Test(ctx, req)
 	if err != nil {
-		logger.Errorf("DoTestV1 failed with err:%v", req, err)
+		logger.Errorf("DoTestV3 failed with err:%v", req, err)
 		return
 	}
-	logger.Infof("DoTestV1 rsp: [%+v]", rsp)
+	logger.Infof("DoTestV3 rsp: [%+v]", rsp)
 	return
 }
 
 func main() {
+	req := &pb.Request{
+		Name: "Test",
+		Age:  100,
+		//Others: []byte("height: 180cm,weight: 65.0kg"),
+		Height: 180.50,
+		Weight: 65.0,
+	}
 	ctx, cancel := context.WithTimeout(context.TODO(), time.Second)
 	defer cancel()
-	DoTestV1(ctx)
+	DoTestV3(ctx,req)
+
+	// 原生GRPC调用
+	rsp, err := GrpcClient().Test(ctx, req)
+	if err != nil {
+		logger.Errorf("GrpcClient.Test failed: %v", err)
+		return
+	}
+	logger.Infof("GrpcClient.Test rsp: [%+v]", rsp)
 }
