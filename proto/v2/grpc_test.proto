@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package grpc_test.v2;
+
+option go_package = ".;grpc_test";
+
+service GrpcTest {
+  rpc Test(Request) returns (Response);
+}
+
+enum TestVersion {
+  // 未知版本
+  UnKNOW = 0;
+  // 版本1
+  VERSION_1 = 1;
+  // 版本2(V2版本新增)
+  VERSION_2 = 20;
+
+}
+
+message Request {
+  // 姓名
+  string name = 1;
+  // 年龄
+  int32 age = 2;
+  // 身高(V2版本新增)
+  double height = 3;
+  // 其他参数(V2版本弃用)
+  bytes others = 100[deprecated = true];
+  // 体重(V2版本新增)
+  float weight = 5;
+}
+
+message Response {
+  // 当前版本
+  TestVersion version = 1;
+  // 状态码
+  int32 code = 2;
+  // 数据集
+  map<string, string> data = 5;
+  // 身高(V2版本新增)
+  double height = 3;
+  // 体重(V2版本新增)
+  float weight = 4;
+}

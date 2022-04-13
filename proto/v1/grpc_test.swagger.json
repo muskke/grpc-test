@@ -1,0 +1,79 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "grpc_test.proto",
+    "version": "version not set"
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {},
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "type_url": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "runtimeError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1Response": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "$ref": "#/definitions/v1TestVersion",
+          "title": "当前版本"
+        },
+        "code": {
+          "type": "integer",
+          "format": "int32",
+          "title": "状态码"
+        },
+        "data": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "数据集"
+        }
+      }
+    },
+    "v1TestVersion": {
+      "type": "string",
+      "enum": [
+        "UnKNOW",
+        "VERSION_1"
+      ],
+      "default": "UnKNOW",
+      "title": "- UnKNOW: 未知版本\n - VERSION_1: 版本1"
+    }
+  }
+}
