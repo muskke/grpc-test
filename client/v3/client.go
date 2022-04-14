@@ -15,26 +15,26 @@ import (
 
 const addr = "localhost:10000"
 
-var instance pb.GrpcTestService
+var instance pb.GrpcTestV3Service
 var once sync.Once
 
 // GetInstance 获取服务单例对象
-func GetInstance() pb.GrpcTestService {
+func GetInstance() pb.GrpcTestV3Service {
 	once.Do(func() {
 		cli := grpcCli.NewClient(client.Proxy("localhost:10000"))
-		instance = pb.NewGrpcTestService("grpc-test-service", cli)
+		instance = pb.NewGrpcTestV3Service("grpc-test-service", cli)
 	})
 	return instance
 }
 
-func GrpcClient() pb.GrpcTestClient {
+func GrpcClient() pb.GrpcTestV3Client {
 	conn, err := grpc.Dial(addr, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		logger.Fatalf("did not connect: %v", err)
 	}
 	//defer conn.Close()
 
-	return pb.NewGrpcTestClient(conn)
+	return pb.NewGrpcTestV3Client(conn)
 }
 
 func DoTestV3(ctx context.Context, req *pb.Request) {
@@ -57,7 +57,7 @@ func main() {
 		Height: 180.50,
 		Weight: 65.0,
 	}
-	ctx, cancel := context.WithTimeout(context.TODO(), time.Second)
+	ctx, cancel := context.WithTimeout(context.TODO(), time.Second*1000000)
 	defer cancel()
 	DoTestV3(ctx,req)
 

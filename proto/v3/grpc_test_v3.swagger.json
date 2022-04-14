@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "grpc_test.proto",
+    "title": "grpc_test_v3.proto",
     "version": "version not set"
   },
   "consumes": [
@@ -45,11 +45,11 @@
         }
       }
     },
-    "v2Response": {
+    "v3Response": {
       "type": "object",
       "properties": {
         "version": {
-          "$ref": "#/definitions/v2TestVersion",
+          "$ref": "#/definitions/v3TestVersion",
           "title": "当前版本"
         },
         "code": {
@@ -57,34 +57,35 @@
           "format": "int32",
           "title": "状态码"
         },
+        "height": {
+          "type": "number",
+          "format": "double",
+          "title": "身高(V3版本交换序号)"
+        },
+        "weight": {
+          "type": "number",
+          "format": "float",
+          "title": "体重(V3版本交换序号)"
+        },
         "data": {
           "type": "object",
           "additionalProperties": {
             "type": "string"
           },
-          "title": "数据集"
-        },
-        "height": {
-          "type": "number",
-          "format": "double",
-          "title": "身高(V2版本新增)"
-        },
-        "weight": {
-          "type": "number",
-          "format": "float",
-          "title": "体重(V2版本新增)"
+          "title": "数据集(V2版本交换字段位置)"
         }
       }
     },
-    "v2TestVersion": {
+    "v3TestVersion": {
       "type": "string",
       "enum": [
         "UnKNOW",
         "VERSION_1",
-        "VERSION_2"
+        "VERSION_2",
+        "VERSION_3"
       ],
       "default": "UnKNOW",
-      "title": "- UnKNOW: 未知版本\n - VERSION_1: 版本1\n - VERSION_2: 版本2(V2版本新增)"
+      "title": "- UnKNOW: 未知版本\n - VERSION_1: 版本1\n - VERSION_2: 版本2(V2版本新增)\n - VERSION_3: 版本3(V3版本新增)"
     }
   }
 }

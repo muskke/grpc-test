@@ -11,7 +11,7 @@ type Handler struct{}
 
 func (h *Handler) Test(ctx context.Context, req *pb.Request, rsp *pb.Response) error {
 	logger.Infof("Handler.Test - req: [%+v]", req)
-	rsp.Version = pb.TestVersion_VERSION_2
+	rsp.Version = pb.TestVersion_VERSION_3
 	rsp.Code = http.StatusOK
 	rsp.Data = make(map[string]string)
 	rsp.Data["name"] = req.GetName()

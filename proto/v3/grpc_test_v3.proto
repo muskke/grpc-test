@@ -1,10 +1,10 @@
 syntax = "proto3";
 
-package grpc_test.v2;
+package grpc_test.v3;
 
 option go_package = ".;grpc_test";
 
-service GrpcTest {
+service GrpcTestV3 {
   rpc Test(Request) returns (Response);
 }
 
@@ -15,20 +15,22 @@ enum TestVersion {
   VERSION_1 = 1;
   // 版本2(V2版本新增)
   VERSION_2 = 20;
+  // 版本3(V3版本新增)
+  VERSION_3 = 3;
 
 }
 
 message Request {
+  // 移除序号为100的字段（V3版本移除字段）
+  reserved 100;
   // 姓名
   string name = 1;
   // 年龄
   int32 age = 2;
   // 身高(V2版本新增)
   double height = 3;
-  // 其他参数(V2版本弃用)
-  bytes others = 100[deprecated = true];
-  // 体重(V2版本新增)
-  float weight = 5;
+  // 体重(V3版本修改序号)
+  float weight = 4;
 }
 
 message Response {
@@ -36,10 +38,10 @@ message Response {
   TestVersion version = 1;
   // 状态码
   int32 code = 2;
-  // 数据集
+  // 身高(V3版本交换序号)
+  double height = 4;
+  // 体重(V3版本交换序号)
+  float weight = 3;
+  // 数据集(V2版本交换字段位置)
   map<string, string> data = 5;
-  // 身高(V2版本新增)
-  double height = 3;
-  // 体重(V2版本新增)
-  float weight = 4;
 }

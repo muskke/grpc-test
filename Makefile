@@ -8,7 +8,7 @@ GOPATH:=$(shell go env GOPATH)
 GOROOT:=$(shell go env GOROOT)
 empty :=
 space := $(empty) $(empty)
-version:=v3
+version:=v2
 
 #go imports
 VALIDATE_IMPORT := Mvalidate/validate.proto=github.com/envoyproxy/protoc-gen-validate/validate
@@ -60,5 +60,5 @@ protos:
 	--micro_out="${GO_IMPORT},plugins=grpc,paths=source_relative:proto/${version}"   \
 	--validate_out="lang=go:proto/${version}"   \
 	--swagger_out=logtostderr=true:proto/${version}  \
-	grpc_test.proto
+	grpc_test_${version}.proto
 

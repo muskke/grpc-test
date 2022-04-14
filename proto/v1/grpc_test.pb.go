@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.28.0
 // 	protoc        v3.20.1--rc1
-// source: grpc_test.proto
+// source: grpc_test_v3.proto
 
 package grpc_test
 
